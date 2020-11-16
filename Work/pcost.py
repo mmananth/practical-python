@@ -2,11 +2,23 @@
 #
 # Exercise 1.27
 
-total_cost = 0
-with open('Data/portfolio.csv', 'rt') as f:
-    header = next(f)
-    for line in f:
-        stock_data = line.split(',')
-        total_cost = total_cost + int(stock_data[1]) * float(stock_data[2])
+# pcost.py
 
-print('Total cost ', str(total_cost))
+import report
+
+def portfolio_cost(filename):
+    '''
+    Computes the total cost (shares*price) of a portfolio file
+    '''
+    portfolio = report.read_portfolio(filename)
+    return sum([s['shares'] * s['price'] for s in portfolio])
+
+def main(args):
+    if len(args) != 2:
+        raise SystemExit('Usage: %s portfoliofile' % args[0])
+    filename = args[1]
+    print('Total cost:', portfolio_cost(filename))
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
