@@ -24,6 +24,15 @@ def create_formatter(name):
         return HTMLTableFormatter()
     else:
         raise RuntimeError(f'Unknown format {name}')
+
+def print_table(objects,columns,formatter):
+    '''
+    Prints output for given attributes
+    '''
+    formatter.headings(columns)
+    for obj in objects:
+        rowdata = [ str(getattr(obj,name)) for name in columns ]
+        formatter.row(rowdata)
         
 
 class TextTableFormatter(TableFormatter):
